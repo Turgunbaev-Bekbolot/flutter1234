@@ -1,4 +1,4 @@
-final String query = '''query{
+const String query = '''query{
   characters{
     results{
       name

@@ -1,79 +1,10 @@
 // To parse this JSON data, do
 //
 //     final userModel = userModelFromJson(jsonString);
-
 import 'dart:convert';
 
 class CharacterModel {
   CharacterModel({
-    this.data,
-  });
-
-  Data? data;
-
-  factory CharacterModel.fromRawJson(String str) =>
-      CharacterModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": data == null ? null : data!.toJson(),
-      };
-}
-
-class Data {
-  Data({
-    this.characters,
-  });
-
-  Characters? characters;
-
-  factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        characters: json["characters"] == null
-            ? null
-            : Characters.fromJson(json["characters"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "characters": characters == null ? null : characters!.toJson(),
-      };
-}
-
-class Characters {
-  Characters({
-    this.results,
-  });
-
-  List<Result>? results;
-
-  factory Characters.fromRawJson(String str) =>
-      Characters.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Characters.fromJson(Map<String, dynamic> json) => Characters(
-        results: json["results"] == null
-            ? null
-            : List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "results": results == null
-            ? null
-            : List<dynamic>.from(results!.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     this.id,
     this.name,
     this.status,
@@ -81,43 +12,50 @@ class Result {
     this.location,
     this.type,
     this.gender,
+    this.image,
+    this.species,
   });
 
   String? id;
   String? name;
-  Status? status;
+  String? status;
   Location? origin;
   Location? location;
   String? type;
-  Gender? gender;
+  String? gender;
+  String? image;
+  String? species;
 
-  factory Result.fromRawJson(String str) => Result.fromJson(json.decode(str));
+  factory CharacterModel.fromRawJson(String str) =>
+      CharacterModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
         id: json["id"] == null ? null : json["id"],
         name: json["name"] == null ? null : json["name"],
-        status:
-            json["status"] == null ? null : statusValues.map[json["status"]],
+        status: json["status"] == null ? null : json["status"],
         origin:
             json["origin"] == null ? null : Location.fromJson(json["origin"]),
         location: json["location"] == null
             ? null
             : Location.fromJson(json["location"]),
         type: json["type"] == null ? null : json["type"],
-        gender:
-            json["gender"] == null ? null : genderValues.map[json["gender"]],
+        gender: json["gender"] == null ? null : json["gender"],
+        image: json["image"] == null ? null : json["image"],
+        species: json["species"] == null ? null : json["species"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "status": status == null ? null : statusValues.reverse[status],
+        "status": status == null ? null : status,
         "origin": origin == null ? null : origin!.toJson(),
         "location": location == null ? null : location!.toJson(),
         "type": type == null ? null : type,
-        "gender": gender == null ? null : genderValues.reverse[gender],
+        "gender": gender == null ? null : gender,
+        "image": image == null ? null : image,
+        "species": species == null ? null : species,
       };
 }
 
@@ -155,9 +93,7 @@ final statusValues = EnumValues(
 class EnumValues<T> {
   Map<String, T> map;
   late Map<T, String> reverseMap;
-
   EnumValues(this.map);
-
   Map<T, String> get reverse {
     if (reverseMap == null) {
       reverseMap = map.map((k, v) => new MapEntry(v, k));
