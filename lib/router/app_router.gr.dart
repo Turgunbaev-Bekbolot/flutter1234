@@ -34,7 +34,6 @@ class AppRouter extends _i3.RootStackRouter {
           child: _i2.InfoOfCharacterScreen(
               key: args.key,
               image: args.image,
-              image2: args.image2,
               name: args.name,
               status: args.status,
               desc: args.desc,
@@ -67,7 +66,6 @@ class InfoOfCharacterRoute extends _i3.PageRouteInfo<InfoOfCharacterRouteArgs> {
   InfoOfCharacterRoute(
       {_i4.Key? key,
       required String image,
-      required String image2,
       required String name,
       required String status,
       required String desc,
@@ -80,7 +78,6 @@ class InfoOfCharacterRoute extends _i3.PageRouteInfo<InfoOfCharacterRouteArgs> {
             args: InfoOfCharacterRouteArgs(
                 key: key,
                 image: image,
-                image2: image2,
                 name: name,
                 status: status,
                 desc: desc,
@@ -96,7 +93,6 @@ class InfoOfCharacterRouteArgs {
   const InfoOfCharacterRouteArgs(
       {this.key,
       required this.image,
-      required this.image2,
       required this.name,
       required this.status,
       required this.desc,
@@ -108,8 +104,6 @@ class InfoOfCharacterRouteArgs {
   final _i4.Key? key;
 
   final String image;
-
-  final String image2;
 
   final String name;
 
@@ -127,6 +121,6 @@ class InfoOfCharacterRouteArgs {
 
   @override
   String toString() {
-    return 'InfoOfCharacterRouteArgs{key: $key, image: $image, image2: $image2, name: $name, status: $status, desc: $desc, gender: $gender, race: $race, origin: $origin, location: $location}';
+    return 'InfoOfCharacterRouteArgs{key: $key, image: $image, name: $name, status: $status, desc: $desc, gender: $gender, race: $race, origin: $origin, location: $location}';
   }
 }

@@ -19,14 +19,18 @@ class CharacterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 27),
+        SizedBox(
           width: 74.w,
           height: 74.h,
-          child: Image.network(image),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(image),
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 18),
+          padding: const EdgeInsets.only(
+            bottom: 18,
+            top: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

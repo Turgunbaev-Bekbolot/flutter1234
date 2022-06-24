@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +7,6 @@ import 'package:last_project/screens/character_screen/widgets/info_of_character_
 
 class InfoOfCharacterScreen extends StatelessWidget {
   final String image;
-  final String image2;
   final String name;
   final String status;
   final String desc;
@@ -17,7 +18,6 @@ class InfoOfCharacterScreen extends StatelessWidget {
   const InfoOfCharacterScreen({
     Key? key,
     required this.image,
-    required this.image2,
     required this.name,
     required this.status,
     required this.desc,
@@ -50,11 +50,25 @@ class InfoOfCharacterScreen extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Image.network(
-                    image,
+                  Container(
                     width: 375.w,
                     height: 218.h,
-                    fit: BoxFit.cover,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(image),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 5,
+                        sigmaY: 3,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: Colors.grey.withOpacity(0.1),
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -65,15 +79,15 @@ class InfoOfCharacterScreen extends StatelessWidget {
                     height: 146,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        width: 8,
+                        width: 8.r,
                         color: Colors.white,
                       ),
                       borderRadius: BorderRadius.circular(100.r),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: BorderRadius.circular(100.r),
                       child: Image.network(
-                        image2,
+                        image,
                         fit: BoxFit.cover,
                       ),
                     ),

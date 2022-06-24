@@ -30,43 +30,40 @@ class _CharacterScreenState extends State<CharacterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 20,
-          right: 15,
-        ),
-        child: BlocConsumer<CharacterBloc, CharacterState>(
-          bloc: characterBloc,
-          listener: (context, state) {
-            if (state is CharacterErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.error.toString())));
-            }
-          },
-          builder: (context, state) {
-            if (state is CharacterLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is CharacterFetchedState) {
-              return Column(
+      body: BlocConsumer<CharacterBloc, CharacterState>(
+        bloc: characterBloc,
+        listener: (context, state) {
+          if (state is CharacterErrorState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error.toString())));
+          }
+        },
+        builder: (context, state) {
+          if (state is CharacterLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is CharacterFetchedState) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
+                top: 25,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'ВСЕГО ПЕРСОНАЖЕЙ: ${state.characterModel.length}',
-                        style: TextStyle(
-                          color: const Color(0xff828282),
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'ВСЕГО ПЕРСОНАЖЕЙ: ${state.characterModel.length}',
+                    style: TextStyle(
+                      color: const Color(0xff828282),
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   Expanded(
                     child: ListView.builder(
@@ -76,7 +73,6 @@ class _CharacterScreenState extends State<CharacterScreen> {
                           onTap: () {
                             context.router.push(InfoOfCharacterRoute(
                               image: state.characterModel[index].image!,
-                              image2: state.characterModel[index].image!,
                               name: state.characterModel[index].name!,
                               status: state.characterModel[index].status!,
                               desc: state.characterModel[index].species!,
@@ -88,7 +84,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
                             ));
                           },
                           child: CharacterCard(
-                              text: state.characterModel[index].origin!.name!,
+                              text: state.characterModel[index].name!,
                               text2: state.characterModel[index].gender!,
                               image: state.characterModel[index].image!,
                               isAlive: state.characterModel[index].status!),
@@ -97,19 +93,21 @@ class _CharacterScreenState extends State<CharacterScreen> {
                     ),
                   ),
                 ],
-              );
-            }
-            if (state is CharacterErrorState) {
-              return Center(
-                child: ElevatedButton(
-                  child: const Text('Обновить'),
-                  onPressed: () {},
-                ),
-              );
-            }
-            return const SizedBox();
-          },
-        ),
+              ),
+            );
+          }
+          if (state is CharacterErrorState) {
+            return Center(
+              child: ElevatedButton(
+                child: const Text('Обновить'),
+                onPressed: () {
+                  characterBloc.add(GetCharacterEvent());
+                },
+              ),
+            );
+          }
+          return const SizedBox();
+        },
       ),
     );
   }

@@ -6,7 +6,9 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
+
   final approuter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
